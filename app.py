@@ -63,6 +63,7 @@ def register():
         session['username'] = name
 
         # Save registration data to PostgreSQL
+        """
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute('''
@@ -83,6 +84,7 @@ def register():
         conn.commit()
         cur.close()
         conn.close()
+        """
 
         # Load and shuffle questions
         questions = load_questions()
@@ -128,19 +130,23 @@ def quiz():
 
 @app.route('/answer', methods=['POST'])
 def answer():
-    selected = int(request.form['option'])
+    selected_index = int(request.form['option'])
     q_index = session.get('q_index', 0)
     score = session.get('score', 0)
     questions = session.get('questions', [])
 
-    correct = questions[q_index]['answer']
-    if selected == correct:
+    current_question = questions[q_index]
+    selected_answer = current_question['options'][selected_index]
+    correct_answer = current_question['answer']
+
+    if selected_answer.strip().lower() == correct_answer.strip().lower():
         score += 1
 
     session['score'] = score
     session['q_index'] = q_index + 1
 
     return redirect(url_for('quiz'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
