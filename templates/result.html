@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="my-4">Quiz Completed!</h1>
+
+        <div class="result">
+            <p>Your Score: {{ score }} out of {{ total }}</p>
+        </div>
+
+        <!-- Display feedback based on score -->
+        <div class="feedback">
+            {% if score == total %}
+                <div class="alert alert-success">
+                    <strong>Excellent!</strong> You got all the answers correct.
+                </div>
+            {% elif score >= total / 2 %}
+                <div class="alert alert-warning">
+                    <strong>Good Job!</strong> You passed the quiz.
+                </div>
+            {% else %}
+                <div class="alert alert-danger">
+                    <strong>Try Again!</strong> You didn’t pass the quiz, but don't worry, you can retake it.
+                </div>
+            {% endif %}
+        </div>
+
+        <a href="{{ url_for('home') }}" class="btn btn-primary">Go Back to Home</a>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
